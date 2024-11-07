@@ -1,0 +1,31 @@
+.img {
+    height: 35px;
+    width: auto;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 18px;
+    width: 100%;
+}
+
+td,
+th {
+    width: 10%;
+    font-size: 16px;
+}
+
+.mat-header-cell {
+    font-weight: 500;
+}
+
+.mat-paginator{
+    font-size: 14px;
+}
+
+.alert {
+    background-color: rgba(247, 161, 161, 0.411);
+}

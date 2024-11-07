@@ -1,0 +1,65 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Añadir producto</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="formProduct">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select formControlName="category_id" matInput placeholder="Categoria" (selectionChange)="categorySelect($event.value)" #select1>
+                                            <mat-select-filter *ngIf="select1.focused" [array]="categories" (filteredReturn)="filteredCateogories =$event" [displayMember]="'name'" [placeholder]="'Buscar'"></mat-select-filter>
+                                            <mat-option *ngFor="let category of filteredCateogories" [value]="category.id">
+                                                {{category.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select formControlName="product_id" matInput placeholder="Producto" (selectionChange)="productSelect($event.value)" #select2>
+                                            <mat-select-filter *ngIf="select2.focused" [array]="products" (filteredReturn)="filteredProducts =$event" [displayMember]="'name'" [placeholder]="'Buscar'"></mat-select-filter>
+                                            <mat-option *ngFor="let product of filteredProducts" [value]="product">
+                                                {{product.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="sku" placeholder="SKU" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="stock" placeholder="Disponibilidad (stock)"
+                                            type="number">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="price" placeholder="Precio" type="number">
+                                        <span matPrefix>$&nbsp;</span>
+                                        <span matSuffix>.00</span>
+                                    </mat-form-field>
+                                </div>                            
+                            </div>
+                            <br>
+                            <button mat-raised-button type="submit" (click)="save()" [disabled]="formProduct.invalid"
+                                class="btn btn-success pull-right">Guardar</button>
+                            <button mat-raised-button type="reset" routerLink="/branches/details/{{branchId}}"
+                                class="btn btn-danger pull-right">Cancelar</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

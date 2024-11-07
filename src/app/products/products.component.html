@@ -1,0 +1,113 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Productos</h4>
+                    </div>
+                    <div class="card-body">
+                        <button type="button" routerLink="/products-new" mat-raised-button class="btn btn-success">
+                            Agregar producto
+                            <span class="material-icons" style="font-size: 22px;">
+                                add
+                            </span>
+                        </button>
+                        <div class="table-responsive">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field>
+                                        <mat-label>Buscar</mat-label>
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: BPI" #input>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select matInput placeholder="Categoria" #select1 (selectionChange)="categorySelect($event.value)">
+                                            <mat-select-filter *ngIf="select1.focused" [array]="categories" (filteredReturn)="filteredCateogories =$event" [displayMember]="'name'" [placeholder]="'Seleccione Categoria'"></mat-select-filter>
+                                            <mat-option [value]="null">Ninguna</mat-option>
+                                            <mat-option *ngFor="let category of filteredCateogories" [value]="category.id">
+                                                {{category.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="mat-elevation-z8">
+                                <table mat-table [dataSource]="products" matSort class="table">
+                                    <!-- Image Column -->
+                                    <ng-container matColumnDef="image">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Imagen </th>
+                                        <td mat-cell *matCellDef="let row"> <img class="img" [src]="row.image"> </td>
+                                    </ng-container>
+                                
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Nombre </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                    </ng-container>
+
+                                     <!-- SKU Column -->
+                                     <ng-container matColumnDef="sku">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> SKU </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.sku}} </td>
+                                    </ng-container>
+
+                                     <!-- Price Column -->
+                                    <ng-container matColumnDef="price">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Precio </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.price | currency:'MXN':'symbol-narrow'}} </td>
+                                    </ng-container>
+
+                                     <!-- Cost Column -->
+                                    <ng-container matColumnDef="cost">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Costo </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.cost | currency:'MXN':'symbol-narrow'}} </td>
+                                    </ng-container>
+
+                                    <!-- STOCK Column -->
+                                    <ng-container matColumnDef="stock">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> STOCK </th>
+                                        <td mat-cell *matCellDef="let row" [ngClass]="row.stock <= 0 ? 'alert': ''"> {{row.stock}} </td>
+                                    </ng-container>
+
+                                    <!-- Category Column -->
+                                    <ng-container matColumnDef="category">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Categoria </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.category.name}} </td>
+                                    </ng-container>
+                                
+                                    <!-- UpdatedAt Column -->
+                                    <ng-container matColumnDef="updateAt">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Última actualización </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.updateAt | date:'medium'}} </td>
+                                    </ng-container>
+
+                                    <!-- Actions Column -->
+                                    <ng-container matColumnDef="actions">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Acciones </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <button mat-raised-button type="submit" class="btn btn-primary"
+                                                (click)="details(row.id)">Detalles</button>
+                                            <button mat-raised-button type="submit"
+                                                class="btn btn-danger" (click)="deleteProduct(row)">Eliminar</button>
+                                        </td>
+                                    </ng-container>
+                                
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                
+                                    <!-- Row shown when there is no matching data. -->
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                    </tr>
+                                </table>
+                            
+                                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of categories" aria-placeholder="Productos"></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

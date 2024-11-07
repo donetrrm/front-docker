@@ -1,0 +1,64 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 *ngIf="employeId" class="card-title">Editar empleado</h4>
+                        <h4 *ngIf="!employeId" class="card-title">Añadir empleado</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="formUser">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select formControlName="roleId" matInput placeholder="Rol">
+                                            <mat-option *ngFor="let role of roles" [value]="role.id">
+                                                {{role.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select formControlName="branchId" matInput placeholder="Sucursal">
+                                            <mat-option *ngFor="let branch of branches" [value]="branch.id">
+                                                {{branch.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                  <mat-form-field class="example-full-width">
+                                    <input formControlName="name" matInput placeholder="Nombre" type="text">
+                                  </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                      <input formControlName="surnames" matInput placeholder="Apellidos" type="text">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                      <input formControlName="username" matInput placeholder="Nombre de usuario" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                      <input formControlName="password" matInput placeholder="Contraseña" type="password">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-raised-button type="submit" (click)="save()" class="btn btn-success pull-right">Guardar</button>
+                            <button mat-raised-button type="reset" routerLink="/employes" class="btn btn-danger pull-right">Cancelar</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  

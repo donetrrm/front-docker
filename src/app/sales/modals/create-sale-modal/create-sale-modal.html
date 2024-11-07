@@ -1,0 +1,103 @@
+<h1 mat-dialog-title>Agregar nueva venta</h1>
+<mat-dialog-content>
+    <form [formGroup]="formAddProductSale">
+        <div class="row">
+            <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                    <mat-select matInput placeholder="Categoria" (selectionChange)="categorySelect($event.value)" formControlName="category_select" #select1>
+                        <mat-select-filter *ngIf="select1.focused" [array]="categories" (filteredReturn)="filteredCateogories =$event" [displayMember]="'name'" [placeholder]="'Buscar'"></mat-select-filter>
+                        <mat-option *ngFor="let category of filteredCateogories" [value]="category.id">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+                <mat-form-field class="example-full-width">
+                    <mat-select matInput placeholder="Producto" (selectionChange)="productSelect($event.value)" formControlName="product_select" #select2>
+                        <mat-select-filter *ngIf="select2.focused" [array]="products" (filteredReturn)="filteredProducts =$event" [displayMember]="'displayName'" [placeholder]="'Buscar'"></mat-select-filter>
+                        <mat-option *ngFor="let productBranch of filteredProducts" [value]="productBranch">
+                            {{productBranch.displayName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+                <button mat-raised-button class="btn btn-info">{{price | currency:'MXN':'symbol-narrow'}}</button>
+            </div>
+            <div class="col-sm-2">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Cantidad"
+                        type="number" formControlName="quantity">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+                <button mat-raised-button class="btn btn-success" (click)="addProduct()" [disabled]="formAddProductSale.invalid">Añadir</button>
+            </div>
+        </div>
+    </form>
+    <form [formGroup]="formCreateSale">
+        <div class="table-responsive">
+            <div>
+                <table mat-table [dataSource]="productsSale" matSort class="table">
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Producto </th>
+                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                    </ng-container>
+                
+                    <!-- Price Column -->
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Precio </th>
+                        <td mat-cell *matCellDef="let row"> {{row.price | currency:'MXN':'symbol-narrow'}} </td>
+                    </ng-container>
+                
+                    <!-- Quantity Column -->
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Cantidad </th>
+                        <td mat-cell *matCellDef="let row"> {{row.quantity}} </td>
+                    </ng-container>
+    
+                    <!-- Total Column -->
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Total </th>
+                        <td mat-cell *matCellDef="let row"> {{row.total | currency:'MXN':'symbol-narrow'}} </td>
+                    </ng-container>
+    
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Accion </th>
+                        <td mat-cell *matCellDef="let row">
+                            <button mat-raised-button type="submit" class="btn btn-danger" (click)="deleteProduct(row)">Eliminar</button>
+                        </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-select matInput placeholder="Tipo de pago" formControlName="paymentType">
+                        <mat-option value="EFECTIVO">Efectivo</mat-option>
+                        <mat-option value="TRANSFERENCIA">Transferencia</mat-option>
+                        <mat-option value="TARJETA">Tarjeta</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <button mat-raised-button class="btn btn-success price-button">
+                    <span class="material-icons" style="font-size: 22px;">
+                        paid
+                    </span>
+                    {{totalSale | currency:'MXN':'symbol-narrow'}}
+                </button>
+            </div>
+        </div>
+    </form>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button type="reset" mat-dialog-close class="btn btn-danger">Cancelar</button>
+        <button mat-raised-button type="submit" (click)="createSale()" class="btn btn-success" [disabled]="formCreateSale.invalid">Crear venta</button>
+    </mat-dialog-actions>
+</mat-dialog-content>

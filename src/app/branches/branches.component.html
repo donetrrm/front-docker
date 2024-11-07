@@ -1,0 +1,70 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Sucursales</h4>
+                    </div>
+                    <div class="card-body">
+                        <button type="button"routerLink="/branches-new" mat-raised-button class="btn btn-success">
+                            Agregar sucursal
+                            <span class="material-icons" style="font-size: 22px;">
+                                add
+                            </span>
+                        </button>
+                        <div class="table-responsive">
+                            <mat-form-field>
+                                <mat-label>Buscar</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Mina" #input>
+                            </mat-form-field>
+
+                            <div class="mat-elevation-z8">
+                                <table mat-table [dataSource]="branches" matSort class="table">
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Nombre </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                    </ng-container>
+                                
+                                    <!-- Description Column -->
+                                    <ng-container matColumnDef="description">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Descripción </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+                                    </ng-container>
+                                
+                                    <!-- UpdatedAt Column -->
+                                    <ng-container matColumnDef="updateAt">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Última actualización </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.updateAt | date:'medium'}} </td>
+                                    </ng-container>
+
+                                    <!-- Actions Column -->
+                                    <ng-container matColumnDef="actions">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Acciones </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <button mat-raised-button type="submit" class="btn btn-primary" (click)="edit(row.id)">Editar</button>
+                                            <button mat-raised-button type="submit" class="btn btn-info" (click)="details(row.id)">Detalles</button>
+                                            <button mat-raised-button type="submit" class="btn btn-danger" (click)="delete(row)">Eliminar</button>
+                                        </td>
+                                    </ng-container>
+                                
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                
+                                    <!-- Row shown when there is no matching data. -->
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                    </tr>
+                                </table>
+                            
+                                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of branches" aria-placeholder="Sucursales"></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  

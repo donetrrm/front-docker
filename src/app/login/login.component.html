@@ -1,0 +1,37 @@
+
+    <div class="container">
+        <div class="row linea">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4  class="card-title simple-text text-center">Iniciar sesión</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="formLogin" (ngSubmit) ="login(formLogin.value)">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="username" placeholder="Usuario" type="text">
+                                        <mat-icon matSuffix>person</mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>  
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput formControlName="password" placeholder="Contraseña" type="password">
+                                      <mat-icon matSuffix>vpn_key</mat-icon>
+                                    </mat-form-field>
+                                </div>                                
+                            </div>                                                                       
+                            
+                            <button mat-raised-button type="submit" class="btn btn-danger btn-block">Iniciar sesión</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  

@@ -1,0 +1,88 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 *ngIf="productId" class="card-title">Editar producto</h4>
+                        <h4 *ngIf="!productId" class="card-title">Añadir producto</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="formProduct">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <input formControlName="name" matInput placeholder="Nombre" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select formControlName="category_id" matInput placeholder="Categoria" #select1>
+                                            <mat-select-filter *ngIf="select1.focused" [array]="categories" (filteredReturn)="filteredCateogories =$event" [displayMember]="'name'" [placeholder]="'Buscar'"></mat-select-filter>
+                                            <mat-option *ngFor="let category of filteredCateogories" [value]="category.id">
+                                                {{category.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="sku" placeholder="SKU" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="stock" placeholder="Disponibilidad (stock)"
+                                            type="number">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="price" placeholder="Precio" type="number">
+                                        <span matPrefix>$&nbsp;</span>
+                                        <span matSuffix>.00</span>
+                                    </mat-form-field>
+                                </div>     
+                                <div class="col">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput formControlName="cost" placeholder="Costo" type="number">
+                                        <span matPrefix>$&nbsp;</span>
+                                        <span matSuffix>.00</span>
+                                    </mat-form-field>
+                                </div>                        
+                            </div>
+                            <br>                        
+                            <mat-slide-toggle class="example-margin" color="primary" checked="false" (toggleChange)="displayImages()" *ngIf="displayToggle">
+                                Actualizar imágenes
+                            </mat-slide-toggle>    
+                            <div *ngIf="updateImages" id="images">                        
+                                <div class="row">                        
+                                    <div class="col-md-12">
+                                        <ngx-dropzone (change)="onSelect($event)" [multiple]="false"
+                                            accept="image/jpeg,image/jpg,image/png,image">
+                                            <ngx-dropzone-label>Imagen de portada</ngx-dropzone-label>
+                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                                *ngFor="let f of image" [file]="f" [removable]="true"
+                                                (removed)="onRemove(f)">
+                                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                            </ngx-dropzone-image-preview>
+                                        </ngx-dropzone>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <button mat-raised-button type="submit" (click)="save()" [disabled]="formProduct.invalid"
+                                class="btn btn-success pull-right">Guardar</button>
+                            <button mat-raised-button type="reset" routerLink="/products"
+                                class="btn btn-danger pull-right">Cancelar</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
